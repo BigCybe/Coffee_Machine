@@ -95,19 +95,51 @@ func (u *Machine) OutInfo(){
 }
 
 func (u *Machine) AddMilk(quantity int){
-	u.Milk += quantity
+	colorReset := "\033[0m"
+	colorRed := "\033[31m"
+	if (u.Milk + quantity > 5000){
+		fmt.Println(string(colorRed), "Attempt to add more then volume. Will be added - ", 5000-u.Milk, "ml\n", string(colorReset))
+	} else{
+		u.Milk += quantity
+		fmt.Println("Milk added")
+	}
+	time.Sleep(3*time.Second)
 }
 
-func (u *Machine) AddWater(quantity int){
-	u.Water += quantity
+func (u *Machine) AddWater(quantity int) {
+	colorReset := "\033[0m"
+	colorRed := "\033[31m"
+	if (u.Water+quantity > 5000) {
+		fmt.Println(string(colorRed), "Attempt to add more then volume. Will be added - ", 5000-u.Water, "ml\n", string(colorReset))
+	} else {
+		u.Water += quantity
+		fmt.Println("Water added")
+	}
+	time.Sleep(3*time.Second)
 }
 
-func (u *Machine) AddSugar(quantity int){
-	u.Sugar += quantity
+func (u *Machine) AddSugar(quantity int) {
+	colorReset := "\033[0m"
+	colorRed := "\033[31m"
+	if (u.Sugar+quantity > 2000) {
+		fmt.Println(string(colorRed), "Attempt to add more then volume. Will be added - ", 2000-u.Sugar, "g\n", string(colorReset))
+	} else{
+		u.Sugar += quantity
+		fmt.Println("Sugar added")
+	}
+	time.Sleep(3*time.Second)
 }
 
-func (u *Machine) AddCoffee(quantity int){
-	u.Coffee += quantity
+func (u *Machine) AddCoffee(quantity int) {
+	colorReset := "\033[0m"
+	colorRed := "\033[31m"
+	if (u.Coffee+quantity > 2000) {
+		fmt.Println(string(colorRed), "Attempt to add more then volume. Will be added - ", 2000-u.Coffee, "g\n", string(colorReset))
+	} else {
+		u.Coffee += quantity
+		fmt.Println("Sugar added")
+	}
+	time.Sleep(3*time.Second)
 }
 
 func (u *Machine) WithDraw_money(quantity int){
@@ -256,7 +288,7 @@ func AdminMenu(){
 	fmt.Println(string(colorPurple),"7 for load data", string(colorReset))
 	fmt.Println(string(colorPurple),"8 for view purchase history", string(colorReset))
 	fmt.Println(string(colorPurple),"9 for delete purchase history", string(colorReset))
-	fmt.Println(string(colorPurple),"For out enter any key", string(colorReset))
+	fmt.Println(string(colorPurple),"For out enter 0", string(colorReset))
 
 }
 
@@ -272,6 +304,15 @@ func ClearPurchHistory(){
 	io.WriteString(f, " ")
 	f.Close()
 	fmt.Println("Deleting complete")
+}
+
+func SpoonsOfSugar() int {
+	count := -1
+	for ; count > 5 || count < 0; {
+	fmt.Println("Enter count of spoons of sugar(1-5)")
+	fmt.Scanf("%d\n", &count)
+	}
+	return count
 }
 
 func main() {
@@ -297,51 +338,36 @@ func main() {
 			UserMenu()
 			var flag3 int
 			fmt.Scanf("%d\n", &flag3)
-			count := 0
 			colorBlue := "\033[34m"
 			colorReset := "\033[0m"
 			switch flag3 {
 				case 1:
-					fmt.Println("Enter count of spoons of sugar")
-					fmt.Scanf("%d\n", &count)
 					fmt.Println(string(colorBlue),"\nПорция буквально на один глоток (до 20 мл). Вкусовые рецепторы будут приятно удивлены силой вкуса этого концентрированного напитка.\nПричем количество кофеина в расчете на 100 мл здесь нижу за счет меньшего времени приготовления.\n", string(colorReset))
-					MyMachine.BuyCoffee(mascoffee[0], count)
+					MyMachine.BuyCoffee(mascoffee[0], SpoonsOfSugar())
 
 				case 2:
-					fmt.Println("Enter count of spoons of sugar")
-					fmt.Scanf("%d\n", &count)
 					fmt.Println(string(colorBlue),"\nПод взбитыми сливками, посыпанными коричным порошком, прячется эспрессо.\nМягкий напиток служит завершением обеда. Подается с ложечкой, ведь сначала надо съесть сливки и лишь затем пить.\n", string(colorReset))
-					MyMachine.BuyCoffee(mascoffee[1], count)
+					MyMachine.BuyCoffee(mascoffee[1], SpoonsOfSugar())
 
 				case 3:
-					fmt.Println("Enter count of spoons of sugar")
-					fmt.Scanf("%d\n", &count)
 					fmt.Println(string(colorBlue),"\nОбразно эсперссо называют кофейным соком. Небольшая (30г) порция исключительно ароматного напитка с насыщенным вкусом не нуждается в дополнениях.\nГотовится из кофе тонкого помола в кофемашинах или рожковых кофеварках под давлением, поэтомуимеет характерную плотную пенку (крема).\nДля подачи используются специальные чашки (демитассе) - небольшие, но толстостенные.\n", string(colorReset))
-					MyMachine.BuyCoffee(mascoffee[2], count)
+					MyMachine.BuyCoffee(mascoffee[2], SpoonsOfSugar())
 
 				case 4:
-					fmt.Println("Enter count of spoons of sugar")
-					fmt.Scanf("%d\n", &count)
 					fmt.Println(string(colorBlue),"\nРазница между эспрессо и американо в размере порции и концентрации кофе. Это 200-400 мл разбавленного кипятком эспрессо.\nВкус напитка ненасыщенный, поэтому его часто дополняют сахаром, молоком. Подают с десертом.\n", string(colorReset))
-					MyMachine.BuyCoffee(mascoffee[3], count)
+					MyMachine.BuyCoffee(mascoffee[3], SpoonsOfSugar())
 
 				case 5:
-					fmt.Println("Enter count of spoons of sugar")
-					fmt.Scanf("%d\n", &count)
 					fmt.Println(string(colorBlue),"\nВ небольшое количество вспененного молока вливают эспрессо, и на поверхности образуются кофейные пятна.\nЗа внешний вид напиток получил название:macchiato в переводе с итальянского означает пятнистый.\nВ прозрачном стакане хорошо видно три слоя с плавными переходами: молоко, кофе и пенку.\n", string(colorReset))
-					MyMachine.BuyCoffee(mascoffee[4], count)
+					MyMachine.BuyCoffee(mascoffee[4], SpoonsOfSugar())
 
 				case 6:
-					fmt.Println("Enter count of spoons of sugar")
-					fmt.Scanf("%d\n", &count)
 					fmt.Println(string(colorBlue),"\nСамый популярный вид кофейно-сливочного коктейля. Молочная пенка покрывает эспрессо, причем молока в 2 раза больше, чем кофе.\nПлотная пенка позволяет создавать рисунки в технике латте-арт.\n", string(colorReset))
-					MyMachine.BuyCoffee(mascoffee[5], count)
+					MyMachine.BuyCoffee(mascoffee[5], SpoonsOfSugar())
 
 				case 7:
-					fmt.Println("Enter count of spoons of sugar")
-					fmt.Scanf("%d\n", &count)
 					fmt.Println(string(colorBlue),"\nОтличия кофе латте от капучино в пропорциях: здесь молоко преобладает.\nСледовательно, содержание кофеина невысоко, и этот вид кофейного коктейля годится для вечера. Часто дополняется сладкими ароматизированными сиропами.\n", string(colorReset))
-					MyMachine.BuyCoffee(mascoffee[6], count)
+					MyMachine.BuyCoffee(mascoffee[6], SpoonsOfSugar())
 
 				case 8:
 					break
