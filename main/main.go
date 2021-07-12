@@ -1,11 +1,13 @@
 package main
 
 import (
+	"bufio"
 	"bytes"
 	"fmt"
 	"io"
 	"io/ioutil"
 	"os"
+	"os/exec"
 	"strconv"
 	"strings"
 	"time"
@@ -59,6 +61,8 @@ func (u *Machine) BuyCoffee(s Coffee, count int){
 		}*/
 		io.WriteString(f, byte.String())
 		f.Close()
+
+		time.Sleep(3*time.Second)
 	}
 }
 
@@ -76,6 +80,9 @@ func Purch_History(){
 	fmt.Println(string(c))
 
 	f.Close()
+
+	fmt.Println("For exit press Enter")
+	bufio.NewReader(os.Stdin).ReadBytes('\n')
 }
 
 func (u *Machine) OutInfo(){
@@ -186,27 +193,27 @@ func MainMenu(){
 }
 
 func UserMenu(){
-	fmt.Println("		  	  ░░░░░░░░▄▄▄▀▀▀▀▀▀▀▀▀▄▄▄░░░░░░░░░\n" +
-					"			  ░░░░░░▄▀░░▄▄▄▄▄▄▄▄▄▄▄░░▀▄░░░░░░░\n" +
-					"			  ░░░░░█░▄███████████████▄░█░░░░░░\n" +
-					"			  ░░░░░█░████████████████▀░█░░░░░░\n" +
-					"			  ░░░░░▀█▄▄▀▀▀▀▀▀▀▀▀▀▀▀▀▄████▄░░░░\n" +
-					"			  ░░▄▄▄▄███████████████████░░██▄░░\n" +
-					"			  ▄▀░░░░░██████████████████▄██▀░▀▄\n" +
-					"			  █▄░░░░░░▀█████████████▀▀▀▀░░░░▄█\n" +
-					"			  ▀█▄░░░░░░░▀█████████▀░░░░░░░░▄█▀\n" +
-					"			  ░▀██▄▄░░░░░░░░░░░░░░░░░░░░▄▄██▀░\n" +
-					"			  ░░░░▀███▄▄▄▄░░░░░░░░▄▄▄▄███▀░░░░\n" +
-					"			  ░░░░░░░░▀▀▀██████████▀▀▀░░░░░░░░\n" +
-					"			  ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░\n" +
-					"			  ░░░███████████████████████████░░\n" +
-					"			  ░░░█────█────█───█───█───█───█░░\n" +
-					"			  ░░░█─██─█─██─█─███─███─███─███░░\n" +
-					"			  ░░░█─████─██─█───█───█───█───█░░\n" +
-					"			  ░░░█─██─█─██─█─███─███─███─███░░\n" +
-					"			  ░░░█────█────█─███─███───█───█░░\n" +
-					"			  ░░░███████████████████████████░░\n" +
-					"			  ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░")
+	fmt.Println("	     ░░░░░░░░▄▄▄▀▀▀▀▀▀▀▀▀▄▄▄░░░░░░░░░\n" +
+					"	     ░░░░░░▄▀░░▄▄▄▄▄▄▄▄▄▄▄░░▀▄░░░░░░░\n" +
+					"	     ░░░░░█░▄███████████████▄░█░░░░░░\n" +
+					"	     ░░░░░█░████████████████▀░█░░░░░░\n" +
+					"	     ░░░░░▀█▄▄▀▀▀▀▀▀▀▀▀▀▀▀▀▄████▄░░░░\n" +
+					"	     ░░▄▄▄▄███████████████████░░██▄░░\n" +
+					"	     ▄▀░░░░░██████████████████▄██▀░▀▄\n" +
+					"	     █▄░░░░░░▀█████████████▀▀▀▀░░░░▄█\n" +
+					"	     ▀█▄░░░░░░░▀█████████▀░░░░░░░░▄█▀\n" +
+					"	     ░▀██▄▄░░░░░░░░░░░░░░░░░░░░▄▄██▀░\n" +
+					"	     ░░░░▀███▄▄▄▄░░░░░░░░▄▄▄▄███▀░░░░\n" +
+					"	     ░░░░░░░░▀▀▀██████████▀▀▀░░░░░░░░\n" +
+					"	     ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░\n" +
+					"	     ░░░███████████████████████████░░\n" +
+					"	     ░░░█────█────█───█───█───█───█░░\n" +
+					"	     ░░░█─██─█─██─█─███─███─███─███░░\n" +
+					"	     ░░░█─████─██─█───█───█───█───█░░\n" +
+					"	     ░░░█─██─█─██─█─███─███─███─███░░\n" +
+					"	     ░░░█────█────█─███─███───█───█░░\n" +
+					"	     ░░░███████████████████████████░░\n" +
+					"	     ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░")
 	colorCyan := "\033[36m"
 	colorReset := "\033[0m"
 	colorYellow := "\033[33m"
@@ -224,6 +231,8 @@ func UserMenu(){
 		                           "                       ░   Latte   ░\n" +
 		       string(colorYellow),"                      ░  90 rub   ░\n" +
 		       string(colorCyan),  "                      ░░░░░░░░░░░░░", string(colorReset))
+
+	fmt.Println(string(colorCyan), "Exit to main menu - 8", string(colorReset))
 
 	/*fmt.Println(string(colorCyan), "1 - Ristretto" + string(colorYellow),"50 rub\n" +
 		string(colorCyan), "2 - Kon-panna" + string(colorYellow),"40 rub\n"+
@@ -276,6 +285,9 @@ func main() {
 	mascoffee[6] = Coffee{"Latte", 90, 70, 15, 5}
 	MyMachine := Machine{1000, 1000, 500, 400, 0}
 	for j := true;j;{
+		clear := exec.Command("cmd", "/c", "cls")
+		clear.Stdout = os.Stdout
+		clear.Run()
 		var flag int
 		MainMenu()
 		fmt.Scanf("%d\n", &flag)
@@ -285,39 +297,54 @@ func main() {
 			UserMenu()
 			var flag3 int
 			fmt.Scanf("%d\n", &flag3)
-			fmt.Println("Enter count of spoons of sugar")
 			count := 0
-			fmt.Scanf("%d\n", &count)
 			colorBlue := "\033[34m"
 			colorReset := "\033[0m"
 			switch flag3 {
 				case 1:
+					fmt.Println("Enter count of spoons of sugar")
+					fmt.Scanf("%d\n", &count)
 					fmt.Println(string(colorBlue),"\nПорция буквально на один глоток (до 20 мл). Вкусовые рецепторы будут приятно удивлены силой вкуса этого концентрированного напитка.\nПричем количество кофеина в расчете на 100 мл здесь нижу за счет меньшего времени приготовления.\n", string(colorReset))
 					MyMachine.BuyCoffee(mascoffee[0], count)
 
 				case 2:
+					fmt.Println("Enter count of spoons of sugar")
+					fmt.Scanf("%d\n", &count)
 					fmt.Println(string(colorBlue),"\nПод взбитыми сливками, посыпанными коричным порошком, прячется эспрессо.\nМягкий напиток служит завершением обеда. Подается с ложечкой, ведь сначала надо съесть сливки и лишь затем пить.\n", string(colorReset))
 					MyMachine.BuyCoffee(mascoffee[1], count)
 
 				case 3:
+					fmt.Println("Enter count of spoons of sugar")
+					fmt.Scanf("%d\n", &count)
 					fmt.Println(string(colorBlue),"\nОбразно эсперссо называют кофейным соком. Небольшая (30г) порция исключительно ароматного напитка с насыщенным вкусом не нуждается в дополнениях.\nГотовится из кофе тонкого помола в кофемашинах или рожковых кофеварках под давлением, поэтомуимеет характерную плотную пенку (крема).\nДля подачи используются специальные чашки (демитассе) - небольшие, но толстостенные.\n", string(colorReset))
 					MyMachine.BuyCoffee(mascoffee[2], count)
 
 				case 4:
+					fmt.Println("Enter count of spoons of sugar")
+					fmt.Scanf("%d\n", &count)
 					fmt.Println(string(colorBlue),"\nРазница между эспрессо и американо в размере порции и концентрации кофе. Это 200-400 мл разбавленного кипятком эспрессо.\nВкус напитка ненасыщенный, поэтому его часто дополняют сахаром, молоком. Подают с десертом.\n", string(colorReset))
 					MyMachine.BuyCoffee(mascoffee[3], count)
 
 				case 5:
+					fmt.Println("Enter count of spoons of sugar")
+					fmt.Scanf("%d\n", &count)
 					fmt.Println(string(colorBlue),"\nВ небольшое количество вспененного молока вливают эспрессо, и на поверхности образуются кофейные пятна.\nЗа внешний вид напиток получил название:macchiato в переводе с итальянского означает пятнистый.\nВ прозрачном стакане хорошо видно три слоя с плавными переходами: молоко, кофе и пенку.\n", string(colorReset))
 					MyMachine.BuyCoffee(mascoffee[4], count)
 
 				case 6:
+					fmt.Println("Enter count of spoons of sugar")
+					fmt.Scanf("%d\n", &count)
 					fmt.Println(string(colorBlue),"\nСамый популярный вид кофейно-сливочного коктейля. Молочная пенка покрывает эспрессо, причем молока в 2 раза больше, чем кофе.\nПлотная пенка позволяет создавать рисунки в технике латте-арт.\n", string(colorReset))
 					MyMachine.BuyCoffee(mascoffee[5], count)
 
 				case 7:
+					fmt.Println("Enter count of spoons of sugar")
+					fmt.Scanf("%d\n", &count)
 					fmt.Println(string(colorBlue),"\nОтличия кофе латте от капучино в пропорциях: здесь молоко преобладает.\nСледовательно, содержание кофеина невысоко, и этот вид кофейного коктейля годится для вечера. Часто дополняется сладкими ароматизированными сиропами.\n", string(colorReset))
 					MyMachine.BuyCoffee(mascoffee[6], count)
+
+				case 8:
+					break
 
 			default:
 				fmt.Println("incorrect input")
@@ -329,6 +356,9 @@ func main() {
 			fmt.Scanf("%s\n", &password)
 			if password == "123" {
 				for i := true;i; {
+					clear := exec.Command("cmd", "/c", "cls")
+					clear.Stdout = os.Stdout
+					clear.Run()
 					MyMachine.OutInfo()
 					AdminMenu()
 					var flag1 int
